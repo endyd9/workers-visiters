@@ -1,3 +1,16 @@
 name = "workers-visitors"
-main = "src/worker.ts"
+main = "src/index.ts"
 compatibility_date = "2023-06-28"
+
+kv_namespaces = [
+    { binding = "DB", id = "76af76481b19489eaebd619a2c6e8691", preview_id = "da16866ce8794f4487dcd22943c7df7c" }
+]
+
+[durable_objects]
+bindings = [
+    {name = "CHAT", class_name = "ChatRoom"}
+]
+
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["ChatRoom"]

@@ -4,18 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visit Count</title>
+    <title>Chat</title>
 </head>
 
 <body>
-    <h1>Visit Count</h1>
-    <h3>How to use?</h3>
-    <ul>
-        <li>All you have to do is call (GET) this URL:<code>
-            http://127.0.0.1:8787/visit?page=$URL
-        </code></li>
-        <li>Replace $URL for your website URL</li>
-    </ul>
+    <h1>Chat</h1>
+    <button>Connect</button>
+    <form>
+        <input placeholder="Input Your Message" type="text">
+        <button>send</button>
+    </form>
+    <h3>Messages</h3>
+    <ul></ul>
+    <script>
+        const button = document.querySelector("button")
+        const form = document.querySelector("form")
+        const ul = document.querySelector("ul")
+        button.addEventListener("click", () => {
+            const soket = new WebSocket(`ws://${window.location.host}/connect`)
+
+            soket.addEventListener("open", () => {
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault()
+                    const input = form.querySelector("input")
+                    soket.send(JSON.stringify({ message: input.value }))
+                    input.value = ""
+                })
+            })
+            soket.addEventListener("message", (event) => {
+                const data = JSON.parse(event.data)
+                const li = document.createElement("li")
+                li.innerText = data.message
+                ul.appendChild(li)
+            })
+        })
+    </script>
 </body>
 
 </html>

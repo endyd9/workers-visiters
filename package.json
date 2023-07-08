@@ -9,7 +9,6 @@
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",
-		"start": "wrangler dev",
-		"dbset": "wrangler kv:namespace create 'view_counter'"
+		"start": "wrangler dev"
 	}
 }
